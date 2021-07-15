@@ -51,10 +51,10 @@ namespace server.controllers
       // Generate sorted list with the employees
       var employeesToImport = await this._importService.SortEmployeeImportData(dataTable);
 
-      employeesToImport.EmployeesToAdd = employeesToImport.EmployeesToAdd.Select(e => { e.Rate = 12; return e; }).ToList();
-      employeesToImport.EmployeesToUpdate = employeesToImport.EmployeesToUpdate.Select(e => { e.Rate = 12; return e; }).ToList();
+      // employeesToImport.EmployeesToAdd = employeesToImport.EmployeesToAdd.Select(e => { e.Rate = 12; return e; }).ToList();
+      // employeesToImport.EmployeesToUpdate = employeesToImport.EmployeesToUpdate.Select(e => { e.Rate = 12; return e; }).ToList();
 
-      await this._importService.ImportEmployeeData(employeesToImport);
+      // await this._importService.ImportEmployeeData(employeesToImport);
     
       // Return the data
       return employeesToImport;
