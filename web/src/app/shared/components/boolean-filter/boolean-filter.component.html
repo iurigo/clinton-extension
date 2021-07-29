@@ -1,0 +1,30 @@
+<div class="flex-column container">
+  <div class="flex-row row">
+    <input [checked]="value === false" (click)="setValue(false)" type="radio" id="rdo-false" class="k-radio" />
+    <label for="rdo-false" class="k-radio-label">{{ falseLabel }}</label>
+  </div>
+  <div class="flex-row row">
+    <input [checked]="value === true" (click)="setValue(true)" type="radio" id="rdo-true" class="k-radio" />
+    <label for="rdo-true" class="k-radio-label">{{ trueLabel }}</label>
+  </div>
+</div>
+<!--
+<ul class="flex-column">
+  <li #falseElement
+    (click)="onValueChange(valueAccessor(item), falseElement)"
+    [ngClass]="{'k-state-selected': isItemSelected(item)}">
+    <input type="checkbox" id="chk-{{valueAccessor(item)}}" (focus)="onFocus(falseElement)" class="k-checkbox" [checked]="isItemSelected(item)" />
+    <label class="k-multiselect-checkbox k-checkbox-label" for="chk-{{valueAccessor(item)}}">
+      {{ textAccessor(item) }}
+    </label>
+  </li>
+  <li #trueElement
+    (click)="onSelectionChange(valueAccessor(item), trueElement)"
+    [ngClass]="{'k-state-selected': isItemSelected(item)}">
+    <input type="checkbox" id="chk-{{valueAccessor(item)}}" (focus)="onFocus(trueElement)" class="k-checkbox" [checked]="isItemSelected(item)" />
+    <label class="k-multiselect-checkbox k-checkbox-label" for="chk-{{valueAccessor(item)}}">
+      {{ textAccessor(item) }}
+    </label>
+  </li>
+</ul>
+-->

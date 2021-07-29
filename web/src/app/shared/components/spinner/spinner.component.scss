@@ -1,0 +1,16 @@
+.container {
+  align-items: center;
+  justify-content: center;
+}
+
+.message {
+  margin-top: 12px;
+  font-size: 22px;
+  font-weight: bold;
+  opacity: 0.6;
+  color: var(--selected-text);
+}
+
+.spinner {
+  color: var(--selected-text);
+}

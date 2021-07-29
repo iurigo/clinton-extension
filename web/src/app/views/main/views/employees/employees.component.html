@@ -1,0 +1,190 @@
+<div class="view-container flex-column container">
+  <app-spinner *ngIf="isBusy"></app-spinner>
+  <div class="flex flex-column body">
+    <div class="flex-row toolbar">
+      <!-- <button appPanelTitle kendoButton [primary]="true" (click)="onEmployeeCreate()">Create</button> -->
+      <!-- File Upload Button -->
+    <button appPanelTitle kendoButton [primary]="true" class="button" (click)="fileUploadInput.click()">
+      <span class="flex-row button-label">
+        <span class="k-icon k-i-upload button-icon"></span>
+        Upload File
+      </span>
+    </button>
+    <button *ngIf="selectedEmployeeIds.length > 0" appPanelTitle kendoButton [primary]="true" (click)="onUpdateMultiple()">
+      <span class="flex-row button-label">
+        <span class="k-icon k-i-edit button-icon" style="margin-right: 4px;"></span>
+         Update Multiple
+      </span>
+    </button>
+      <!-- employee search -->
+      <div class="view-wrapper flex">
+        <input
+          kendoTextBox
+          [(ngModel)]="searchText"
+          (keyup.enter)="onSearchClick()"
+          placeholder="Search"
+          class="search"
+        />
+        <span (click)="onSearchClick()" class="k-icon k-i-search icon search-icon"></span>
+        <span (click)="searchText = ''; onSearchClick()" class="k-icon k-i-x icon clear-icon"></span>
+      </div>
+    </div>
+    <div class="view-wrapper flex">
+      <kendo-grid
+        [data]="gridData"
+        [pageable]="{ buttonCount: 4, pageSizes: [25, 50, 75, 100] }"
+        [columnMenu]="true"
+        [resizable]="true"
+        [skip]="state.skip"
+        [pageSize]="state.take"
+        [sortable]="{ mode: 'multiple' }"
+        [sort]="state.sort"
+        [filter]="state.filter"
+        [filterable]="'menu'"
+        [selectable]="{ mode: 'multiple' }"
+        [kendoGridSelectBy]="'id'"
+        [selectedKeys]="selectedEmployeeIds"
+        (dataStateChange)="gridStateChange($event)"
+        (cellClick)="gridClick$.next($event)"
+        class="view-container"
+      >
+        <kendo-grid-checkbox-column
+          [showSelectAll]="true"
+          [reorderable]="false"
+          [resizable]="false"
+          [columnMenu]="false"
+          [width]="'44px'"
+        ></kendo-grid-checkbox-column>
+        <!-- [ mini view ] -->
+        <kendo-grid-column [title]="'Details'" media="(max-width: 699px)" [columnMenu]="false">
+          <ng-template kendoGridCellTemplate let-employee>
+            <div class="flex-column">
+              <div class="flex-row">
+                <span class="mini-cell-label">Employee Id:</span
+                ><span>{{ employee.employeeId }}</span>
+              </div>
+              <div class="flex-row">
+                <span class="mini-cell-label">First Name:</span
+                ><span>{{ employee.firstName }}</span>
+              </div>
+              <div class="flex-row">
+                <span class="mini-cell-label">Last Name:</span
+                ><span>{{ employee.lastName }}</span>
+              </div>
+              <div class="flex-row">
+                <span class="mini-cell-label">Discipline:</span
+                ><span>{{ employee.discipline }}</span>
+              </div>
+              <div class="flex-row">
+                <span class="mini-cell-label">Rate:</span
+                ><span>{{ employee.rate }}</span>
+              </div>
+              <div class="flex-row">
+                <span class="mini-cell-label">Is Active:</span>
+                <span>{{ employee.isActive ? 'Yes' : 'No' }}</span>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <!-- [ full view ] -->
+        <kendo-grid-column
+          [field]="'employeeId'"
+          [title]="'Employee Id'"
+          [filter]="'numeric'"
+          [width]="'90px'"
+          media="(min-width: 700px)"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [field]="'firstName'"
+          [title]="'First Name'"
+          [filter]="'text'"
+          [width]="'90px'"
+          media="(min-width: 700px)"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [field]="'lastName'"
+          [title]="'Last Name'"
+          [filter]="'text'"
+          [width]="'90px'"
+          media="(min-width: 700px)"
+        ></kendo-grid-column>
+        <kendo-grid-column
+          [field]="'discipline'"
+          [title]="'Discipline'"
+          [width]="'130px'"
+          media="(min-width: 700px)"
+        >
+          <ng-template kendoGridCellTemplate let-employee>
+            <span>{{ employee.discipline }}</span>
+          </ng-template>
+          <ng-template
+            kendoGridFilterMenuTemplate
+            let-column="column"
+            let-filter="filter"
+            let-filterService="filterService"
+          >
+            <app-multicheck-filter
+              [field]="column.field"
+              [filterService]="filterService"
+              [currentFilter]="filter"
+              [data]="disciplineFilterOptions"
+            ></app-multicheck-filter>
+          </ng-template>
+        </kendo-grid-column>
+        <kendo-grid-column
+          [field]="'rate'"
+          [title]="'Rate'"
+          [filter]="'numeric'"
+          [width]="'90px'"
+          media="(min-width: 700px)"
+        ></kendo-grid-column>
+
+        <kendo-grid-column [field]="'isActive'" [title]="'Active'" [width]="'90px'" media="(min-width: 700px)">
+          <ng-template kendoGridFilterMenuTemplate
+            let-filter="filter"
+            let-filterService="filterService"
+          >
+            <app-boolean-filter
+              [field]="'isActive'"
+              [filterService]="filterService"
+              [currentFilter]="filter"
+              [falseLabel]="'Inactive'"
+              [trueLabel]="'Active'"
+            ></app-boolean-filter>
+          </ng-template>
+          <ng-template kendoGridCellTemplate let-dataItem>
+            <div class="content-center">
+              <span *ngIf="dataItem.isActive" class="k-icon k-i-check"></span>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        <!-- [ any view ] -->
+        <kendo-grid-column
+          *ngIf="employeeActions.length > 0"
+          [resizable]="false"
+          [reorderable]="false"
+          [columnMenu]="false"
+          [width]="'60px'"
+        >
+          <ng-template kendoGridCellTemplate let-employee="dataItem">
+            <div class="content-center">
+              <app-menu-button
+                [actions]="employeeActions"
+                (onAction)="onEmployeeAction($event, employee)"
+              ></app-menu-button>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+      </kendo-grid>
+    </div>
+  </div>
+</div>
+
+<!-- File Upload -->
+<input
+  #fileUploadInput
+  type="file"
+  multiple="false"
+  style="display: none"
+  (change)="importEmployees($event.target.files)"
+/>

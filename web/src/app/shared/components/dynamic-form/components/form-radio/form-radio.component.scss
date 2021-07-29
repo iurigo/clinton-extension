@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.radio {
+  margin-right: 12px;
+}
+
+.radio-input {
+  margin: 2px 4px 0 0;
+}

@@ -1,0 +1,16 @@
+.action-button {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
+  height: auto;
+  align-self: flex-start;
+}
+
+.action-icon {
+  margin-right: 4px;
+}
+
+.drop-down-button {
+  align-self: flex-start;
+}

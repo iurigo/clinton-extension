@@ -6,11 +6,13 @@ namespace server.graphql.mutation.types.employee
   public class EmployeeInput
   {
     // Properties
+    public int? Id { get; set; }
     public int EmployeeId { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public EmployeeDiscipline Discipline { get; set; }
     public float Rate { get; set; }
+    public bool IsActive { get; set; }
   }
 
 
@@ -21,6 +23,11 @@ namespace server.graphql.mutation.types.employee
       descriptor.Description("The new employee input type.");
 
       // Properties
+      descriptor.Field(f => f.Id)
+        .Name("id")
+        .Description("The employee unique identifier.")
+        .Type<IntType>();
+
       descriptor.Field(f => f.EmployeeId)
         .Name("employeeId")
         .Description("The employee unique identifier.")
@@ -45,6 +52,11 @@ namespace server.graphql.mutation.types.employee
         .Name("rate")
         .Description("The employee's rate.")
         .Type<NonNullType<DecimalType>>();
+
+      descriptor.Field(f => f.IsActive)
+        .Name("isActive")
+        .Description("The employee's active status.")
+        .Type<NonNullType<BooleanType>>();
     }
 
   }

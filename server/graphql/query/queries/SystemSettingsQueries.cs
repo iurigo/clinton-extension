@@ -13,7 +13,7 @@ namespace server.graphql.query.queries
         .Argument("key", a => a.Type<NonNullType<StringType>>().Description("The settings' key value."))
         .Type<StringType>()
         .Authorize(new[] { UserRole.ADMIN.ToString() })
-        .Resolver(ctx => ctx.Service<ISystemSettingsResolvers>().GetSystemSettings(ctx.Argument<string>("key")));
+        .Resolve(ctx => ctx.Service<ISystemSettingsResolvers>().GetSystemSettings(ctx.ArgumentValue<string>("key")));
     }
 
   }

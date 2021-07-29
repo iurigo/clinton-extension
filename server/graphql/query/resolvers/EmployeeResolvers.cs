@@ -13,7 +13,8 @@ namespace server.graphql.query.resolvers
 {
   public interface IEmployeeResolvers
   {
-    Task<Pagination<Employee>> GetEmployees(KeyInfo info);
+    Task<Pagination<Employee>> GetPageableEmployees(KeyInfo info);
+    Task<List<Employee>> GetEmployees(KeyInfo info);
     Task<IReadOnlyDictionary<int, Employee>> GetEmployeeById(IReadOnlyCollection<int> keys);
   }
 
@@ -31,15 +32,24 @@ namespace server.graphql.query.resolvers
 
 
     /// <summary>
-    /// Get all employees
+    /// Get all pageable employees
     /// </summary>
-    public async Task<Pagination<Employee>> GetEmployees(KeyInfo info)
+    public async Task<Pagination<Employee>> GetPageableEmployees(KeyInfo info)
     {
       // Filter employees
       var employees = await this._db.Employees.AsNoTracking().ToPageableQuery(info);
       
       // Return the result
       return new Pagination<Employee> { Data = employees.Data, TotalCount = employees.TotalCount };
+    }
+
+    /// <summary>
+    /// Get all employees
+    /// </summary>
+    public async Task<List<Employee>> GetEmployees(KeyInfo info)
+    {
+      var employees = await this._db.Employees.AsNoTracking().ToQuery(info);
+      return employees;
     }
 
 

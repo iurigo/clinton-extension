@@ -1,0 +1,5 @@
+<label [for]="item.field" class="flex-row label">
+  <span>{{ item.title }}</span>
+  <span *ngIf="item.isRequired" class="k-required required">*</span>
+  <span *ngIf="item.isOptional" class="optional">(optional)</span>
+</label>

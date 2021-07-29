@@ -13,20 +13,20 @@ namespace server.graphql.query.queries
         .Argument("username", a => a.Type<NonNullType<StringType>>().Description("The username"))
         .Argument("password", a => a.Type<NonNullType<StringType>>().Description("The password"))
         .Type<NonNullType<AccessTokenType>>()
-        .Resolver(ctx =>
+        .Resolve(ctx =>
         {
           return ctx.Service<IAccessTokenResolvers>()
-            .GetByUsernameAndPassword(ctx.Argument<string>("username"), ctx.Argument<string>("password"));
+            .GetByUsernameAndPassword(ctx.ArgumentValue<string>("username"), ctx.ArgumentValue<string>("password"));
         });
 
       descriptor.Field("refreshToken")
         .Description("Get the access-token by refresh-token.")
         .Argument("token", a => a.Type<NonNullType<StringType>>().Description("The refresh-token"))
         .Type<NonNullType<AccessTokenType>>()
-        .Resolver(ctx =>
+        .Resolve(ctx =>
         {
           return ctx.Service<IAccessTokenResolvers>()
-            .GetAccessTokenByRefreshToken(ctx.Argument<string>("token"));
+            .GetAccessTokenByRefreshToken(ctx.ArgumentValue<string>("token"));
         });
     }
   }

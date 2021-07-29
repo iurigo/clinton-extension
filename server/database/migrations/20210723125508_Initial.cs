@@ -18,6 +18,7 @@ namespace server.database.migrations
                     LastName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Discipline = table.Column<int>(type: "int", nullable: false),
                     Rate = table.Column<float>(type: "real", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
@@ -110,12 +111,12 @@ namespace server.database.migrations
             migrationBuilder.InsertData(
                 table: "clinton-extension.system-logs",
                 columns: new[] { "Id", "Date", "Details", "Source", "Type", "UserId" },
-                values: new object[] { 1L, new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)), null, "system", 0, null });
+                values: new object[] { 1L, new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)), null, "system", 0, null });
 
             migrationBuilder.InsertData(
                 table: "clinton-extension.users",
                 columns: new[] { "Id", "CreatedAt", "DeletedAt", "FullName", "PasswordHash", "PasswordSalt", "Role", "Status", "UpdatedAt", "Username" },
-                values: new object[] { 1, new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)), null, "Administrator", "$2a$11$Y2w46s/n.gv80rbudiU3zOhHQaz.iZphi1XQplEVo1vyS4py/9di6", "$2a$11$Y2w46s/n.gv80rbudiU3zO", 1, 1, new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)), "admin" });
+                values: new object[] { 1, new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)), null, "Administrator", "$2a$11$6BEaJsYKeaUr0e8Cpuk9F.lVqu.ux1ZiQCcvjq6iTWY0tQxkxreb.", "$2a$11$6BEaJsYKeaUr0e8Cpuk9F.", 1, 1, new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)), "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_clinton-extension.system-logs_UserId",

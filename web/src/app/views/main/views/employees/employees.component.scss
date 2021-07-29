@@ -1,0 +1,89 @@
+.container {
+  background-color: var(--background);
+}
+
+.flex-cell-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-items: center;
+}
+
+.mini-cell-label {
+  font-weight: bold;
+  min-width: 130px;
+}
+
+.toolbar {
+  background-color: var(--background-tone2);
+  align-items: center;
+  padding: 4px;
+  min-height: 40px;
+
+  & > button {
+    margin: 0 4px 0 0;
+  }
+}
+
+.body {
+  border-radius: 2px;
+  background-color: var(--background-tone2);
+  border: solid 1px var(--border);
+  border-right: none;
+  border-bottom: none;
+  margin: 2px;
+}
+
+.button {
+  width: 120px;
+  height: 30px;
+  margin-right: 2px;
+}
+
+.button-label {
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+}
+.button-icon {
+  margin-bottom: 2px;
+  font-size: 16px;
+}
+
+.search {
+  width: 100%;
+  padding-right: 48px;
+}
+
+.icon {
+  position: absolute;
+  cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    color: var(--accent);
+    opacity: 1;
+  }
+}
+
+.search-icon {
+  top: 6px;
+  right: 26px;
+}
+
+.clear-icon {
+  top: 6px;
+  right: 7px;
+}
+
+.content-center {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+@media only screen and (max-height: 500px) {
+  .dialog-grid {
+    max-height: 220px;
+  }
+}

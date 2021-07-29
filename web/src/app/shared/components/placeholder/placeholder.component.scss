@@ -1,0 +1,10 @@
+.body {
+  align-items: center;
+  justify-content: center;
+  
+
+  > span {
+    color: var(--border);
+    padding-top: 12px;
+  }
+}

@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="header flex-row disable-select">
+    <span>{{ title }}</span>
+    <span class="flex"></span>
+    <button kendoButton (click)="onCancel()" class="small-btn"><span class="k-icon k-i-close"></span></button>
+  </div>
+  <div class="wrapper flex-column flex-center">
+    <div>{{ message }}</div>
+    <div class="flex-row dialog-actions">
+      <button kendoButton class="main-action-btn" (click)="onConfirm()">{{ primary }}</button>
+      <button kendoButton class="main-action-btn btn-secondary" (click)="onCancel()">{{ secondary }}</button>
+    </div>
+  </div>
+</div>

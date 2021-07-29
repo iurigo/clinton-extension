@@ -1,0 +1,24 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <div class="k-textbox flex">
+      <span *ngIf="!item.altView" class="link">
+        <a href="{{ item.value }}" target="_blank">{{ item.value }}</a>
+      </span>
+      <input
+        *ngIf="!!item.altView"
+        type="text"
+        [id]="item.field"
+        [appAutoFocus]="item.focus"
+        [ngModel]="item.value"
+        (ngModelChange)="writeValue($event)"
+        (keyup.enter)="onEnterKeyPress.emit(item)"
+        class="k-input url-input" />
+      <div (click)="onAltViewClick()" class="alt-view-icon">
+        <span class="k-icon k-i-edit"></span>
+      </div>
+    </div>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

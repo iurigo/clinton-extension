@@ -65,6 +65,7 @@ namespace server.database.contexts
         c.Property(p => p.EmployeeId).IsRequired();
         c.Property(p => p.Discipline).IsRequired();
         c.Property(p => p.Rate).IsRequired();
+        c.Property(p => p.IsActive).IsRequired();
         
         c.HasQueryFilter(f => f.DeletedAt == null);
       });

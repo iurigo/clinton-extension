@@ -1,0 +1,19 @@
+<div
+  [dndDisableIf]="!isDraggable"
+  [dndDraggable]="draggableData"
+  (dndStart)="onDragStart.emit()"
+  (dndEnd)="onDragEnd.emit()"
+  class="flex-column flex container"
+>
+  <app-spinner *ngIf="isBusy"></app-spinner>
+  <div class="title flex-row" dndHandle>
+    <span *ngIf="isMicroBusy" class="k-icon k-i-loading"></span>
+    <span *ngIf="!isMicroBusy && iconClass" [class]="iconClass"></span>
+    <label>{{ title }}</label>
+    <span *ngIf="title?.length > 0" class="flex"><!-- spring --></span>
+    <ng-content select="[appPanelTitle]"></ng-content>
+  </div>
+  <div class="flex-column flex view-wrapper body">
+    <ng-content></ng-content>
+  </div>
+</div>

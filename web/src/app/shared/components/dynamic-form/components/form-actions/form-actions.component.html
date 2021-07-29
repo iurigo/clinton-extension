@@ -1,0 +1,28 @@
+<!-- Single Action -->
+<button
+  *ngIf="item.actions.length === 1"
+  kendoButton (click)="onAction.emit({ action: item.actions[0].action, item: item })"
+  class="action-button"
+>
+  <ng-container *ngTemplateOutlet="buttonContent; context: { action: item.actions[0] }"></ng-container>
+</button>
+<!-- Multi Actions -->
+<kendo-dropdownbutton
+  *ngIf="item.actions.length > 1"
+  [data]="item.actions"
+  [textField]="'title'"
+  [popupSettings]="{ align: 'right' }"
+  (itemClick)="onAction.emit({ action: $event.action, item: item })"
+  class="drop-down-button"
+>
+  <span class="k-icon k-i-more-vertical"></span>
+  <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+    <ng-container *ngTemplateOutlet="buttonContent; context: { action: dataItem }"></ng-container>
+  </ng-template>
+</kendo-dropdownbutton>
+
+<!-- Button content template -->
+<ng-template #buttonContent let-action="action">
+  <span *ngIf="!!action.iconCss" [class.action-icon]="!!action.title" [ngClass]="action.iconCss"></span>
+  <span *ngIf="!!action.title">{{ action.title }}</span>
+</ng-template>

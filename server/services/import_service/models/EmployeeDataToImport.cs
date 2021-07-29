@@ -8,6 +8,6 @@ namespace server.services.import_service.models
   {
     public List<EmployeeImport> EmployeesToAdd { get; set; }
     public List<EmployeeImport> EmployeesToUpdate { get; set; }
-    public List<EmployeeImport> EmployeesToRemove { get; set; }
+    public List<EmployeeImport> EmployeesToUpdateStatus { get; set; }
   }
 }

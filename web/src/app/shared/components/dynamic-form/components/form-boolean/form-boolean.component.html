@@ -1,0 +1,17 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="container">
+  <input
+    type="checkbox"
+    [id]="item.field"
+    [appAutoFocus]="!!item.focus"
+    [disabled]="item.isReadOnly"
+    [(ngModel)]="item.value"
+    (ngModelChange)="writeValue($event)"
+    class="k-checkbox checkbox"
+  />
+  <label [for]="item.field" class="k-checkbox-label">{{ item.title }}</label>
+  <span *ngIf="item.isRequired" class="k-required required">*</span>
+  <span *ngIf="item.isOptional" class="optional">(optional)</span>
+  <span class="flex"><!-- spring --></span>
+  <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+  <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+</div>

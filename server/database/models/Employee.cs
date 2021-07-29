@@ -15,6 +15,7 @@ namespace server.database.models
     public string LastName { get; set; }
     public EmployeeDiscipline Discipline { get; set; }
     public float Rate { get; set; }
+    public bool IsActive { get; set; }
 
     // Timestamps
     public DateTimeOffset CreatedAt { get; set; }

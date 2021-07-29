@@ -24,7 +24,8 @@ namespace server.services.import_service.helpers
         FirstName = employee.FirstName,
         LastName = employee.LastName,
         Discipline = employee.Discipline,
-        Rate = employee.Rate
+        Rate = employee.Rate,
+        IsActive = employee.IsActive
       };
     }
 
@@ -37,17 +38,28 @@ namespace server.services.import_service.helpers
     }
 
     /// <summary>
+    /// Change "Active" status employees
+    /// </summary>
+    public static List<EmployeeImport> SetStatus(this List<EmployeeImport> employees, bool isActive)
+    {
+      // Change status and return
+      return employees.Select(employee => { employee.IsActive = isActive; return employee; }).ToList();
+    }
+
+    /// <summary>
     /// Convert employee
     /// </summary>
     public static EmployeeInput ToModel(this EmployeeImport employee)
     {
       return new EmployeeInput
       {
+        Id = employee.Id,
         EmployeeId = employee.EmployeeId,
         FirstName = employee.FirstName,
         LastName = employee.LastName,
         Discipline = employee.Discipline,
-        Rate = employee.Rate.Value
+        Rate = employee.Rate.Value,
+        IsActive = employee.IsActive
       };
     }
 

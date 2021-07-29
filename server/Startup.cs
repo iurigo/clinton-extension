@@ -50,16 +50,13 @@ namespace server
       services.AddDbContextPool<DataContext>(o => o.UseSqlServer(db));
 
       // GraphQL
-      services.AddGraphQL(sp => SchemaBuilder.New()
-        .AddServices(sp)
-        .AddAuthorizeDirectiveType()
+      // GraphQL
+      services.AddGraphQLServer()
         .AddQueryType<Query>()
         .AddMutationType<Mutation>()
         .AddDirectiveType<FilterDirective>()
         .AddDirectiveType<SortDirective>()
-        .Create()
-      );
-      services.AddDataLoaderRegistry();
+        .AddAuthorization();
 
        // GraphQL resolvers
       services.AddTransient<IAccessTokenResolvers, AccessTokenResolvers>();
@@ -68,6 +65,7 @@ namespace server
       services.AddTransient<ISystemLogResolvers, SystemLogResolvers>();
       services.AddTransient<IEmployeeResolvers, EmployeeResolvers>();
       services.AddTransient<ISystemSettingsResolvers, SystemSettingsResolvers>();
+      services.AddTransient<ISearchResolvers, SearchResolvers>();
 
       // GraphQL modifiers
       services.AddTransient<IUserModifiers, UserModifiers>();
@@ -114,12 +112,10 @@ namespace server
       app.UseAuthorization();
       app.UseErrorHandler();
 
-      // GraphQL
-      app.UseGraphQL("/graphql");
-
       // Rest
       app.UseEndpoints(o =>
       {
+        o.MapGraphQL("/graphql");
         o.MapControllers();
       });
     }

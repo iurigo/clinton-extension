@@ -1,0 +1,15 @@
+<div *ngIf="availableActions?.length > 0" class="flex-row toolbar">
+  <div *ngIf="title?.length > 0" class="flex-row flex title disable-select">{{ title }}</div>
+  <button
+  *ngFor="let action of availableActions"
+  kendoButton
+  class="button"
+  (click)="actionClick.emit(action.id)"
+  [style]="action.style"
+  [disabled]="action.isDiabled"
+  >
+  {{ action.text }}
+  <span *ngIf="action.iconClass?.length > 0" [class]="action.iconClass"></span>
+
+  </button>
+</div>

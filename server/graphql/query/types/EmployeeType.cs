@@ -39,6 +39,11 @@ namespace server.graphql.query.types.employee
         .Name("rate")
         .Description("The employee's rate.")
         .Type<NonNullType<DecimalType>>();
+
+      descriptor.Field(f => f.IsActive)
+        .Name("isActive")
+        .Description("The employee's active status.")
+        .Type<NonNullType<BooleanType>>();
       
       descriptor.Field(f => f.CreatedAt)
         .Name("createdAt")

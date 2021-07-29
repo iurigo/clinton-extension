@@ -1,0 +1,25 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <kendo-multiselect
+      [id]="item.field"
+      [data]="item.options"
+      [valueField]="'id'"
+      [textField]="'value'"
+      [valuePrimitive]="true"
+      [kendoDropDownFilter]="true"
+      [appAutoFocus]="!!item.focus"
+      [value]="item.value"
+      [readonly]="item.isReadOnly"
+      [kendoDropDownFilter]="{caseSensitive: false, operator: 'contains'}"
+      (valueChange)="writeValue($event)"
+      (click)="onClick($event)"
+      (open)="onPopupOpen($event)"
+      (removeTag)="onRemoveTag($event)"
+      class="flex control"
+    >
+    </kendo-multiselect>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+.container {
+  background-color: var(--background);
+}
+
+.cell-drag {
+  margin-top: 4px;
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.flex-cell-wrapper {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-items: center;
+}
+
+.grid {
+  overflow-y: hidden;
+}
+
+.hidden-cell {
+  margin: 0 auto;
+}
+
+.mini-cell-label {
+  font-weight: bold;
+  min-width: 100px;
+}
+
+.content-center {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.status-name {
+  cursor: pointer;
+  &:hover {
+    color: var(--accent);
+  }
+}
+
+.checkbox-cell {
+  margin: 0 auto;
+}
+
+@media only screen and (max-height: 500px) {
+  .dialog-grid {
+    max-height: 220px;
+  }
+}

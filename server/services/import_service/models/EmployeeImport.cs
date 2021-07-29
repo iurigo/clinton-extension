@@ -11,5 +11,6 @@ namespace server.services.import_service.models
     public string LastName { get; set; }
     public EmployeeDiscipline Discipline { get; set; }
     public float? Rate { get; set; }
+    public bool IsActive { get; set; }
   }
 }

@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  width: auto;
+  padding: 0 4px;
+}
+
+.search {
+  padding-right: 42px;
+}
+
+.icon {
+  cursor: pointer;
+  opacity: 0.6;
+  &:hover {
+    color: var(--accent);
+    opacity: 1;
+  }
+}
+
+.search-icon {
+  position: absolute;
+  right: 24px;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 4px;
+}

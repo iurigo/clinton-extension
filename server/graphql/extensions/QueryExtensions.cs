@@ -6,7 +6,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using HotChocolate.Execution;
 using Microsoft.EntityFrameworkCore;
-using server.formatters;
 using server.graphql.models;
 using server.graphql.types;
 

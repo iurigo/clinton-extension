@@ -1,0 +1,13 @@
+<kendo-dropdownbutton
+  [data]="actions"
+  [textField]="'name'"
+  [icon]="'more-vertical'"
+  [popupSettings]="{ align: 'right' }"
+  [disabled]="disabled"
+  (itemClick)="onAction.emit($event)"
+>
+  <ng-template kendoDropDownButtonItemTemplate let-dataItem>
+    <span [ngClass]="dataItem.icon"></span>
+    <span>{{ dataItem.name }}</span>
+  </ng-template>
+</kendo-dropdownbutton>

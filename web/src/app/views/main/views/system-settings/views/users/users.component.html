@@ -1,0 +1,67 @@
+<div class="view-container flex-column container">
+  <app-panel [title]="'Users'" [iconClass]="'k-icon k-i-aggregate-fields'" [isBusy]="isBusy" [isMicroBusy]="isMicroBusy"
+    class="flex flex-column">
+    <button appPanelTitle kendoButton [primary]="true" (click)="onUserCreate()">Create</button>
+    <div class="view-wrapper flex">
+
+      <kendo-grid *ngIf="users.length > 0" [data]="users" [scrollable]="true" class="flex-column view-container">
+        <kendo-grid-column [title]="'Full Name'" media="(min-width: 560px)">
+          <ng-template kendoGridCellTemplate let-user="dataItem">
+            <div class="flex-cell-wrapper">
+              <span class="user-name" (click)="onUserUpdate(user)">{{ user.fullName }}</span>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [field]="'username'" [title]="'Username'" media="(min-width: 560px)"></kendo-grid-column>
+
+        <kendo-grid-column [field]="'isActive'" [title]="'Is Active'" [width]="'100px'" media="(min-width: 560px)">
+          <ng-template kendoGridCellTemplate let-user="dataItem">
+            <span *ngIf="user.isActive" class="k-icon k-i-check content-center"></span>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [field]="'isAdmin'" [title]="'Is Admin'" [width]="'100px'" media="(min-width: 560px)">
+          <ng-template kendoGridCellTemplate let-user="dataItem">
+            <span *ngIf="user.isAdmin" class="k-icon k-i-check content-center"></span>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [title]="'Details'" media="(max-width: 560px)">
+          <ng-template kendoGridCellTemplate let-user="dataItem">
+            <div class="flex-cell-wrapper">
+              <div class="flex-column" (click)="onUserUpdate(user)">
+                <div class="flex-row">
+                  <span class="mini-cell-label">Full Name:</span>
+                  <span>{{ user.fullName }}</span>
+                </div>
+                <div class="flex-row">
+                  <span class="mini-cell-label">Username:</span>
+                  <span>{{ user.username }}</span>
+                </div>
+                <div class="flex-row">
+                  <span class="mini-cell-label">Is Active:</span>
+                  <span>{{ user.isActive ? 'Yes' : 'No' }}</span>
+                </div>
+                <div class="flex-row">
+                  <span class="mini-cell-label">Is Admin:</span>
+                  <span>{{ user.isAdmin ? 'Yes' : 'No' }}</span>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+
+        <kendo-grid-column [width]="'60px'">
+          <ng-template kendoGridCellTemplate let-user="dataItem">
+            <div *ngIf="user.id !== 1" class="content-center">
+              <app-menu-button [actions]="userActions" (onAction)="onUserAction($event, user.id)"></app-menu-button>
+            </div>
+          </ng-template>
+        </kendo-grid-column>
+        </kendo-grid>
+
+        <app-placeholder *ngIf="users.length === 0"></app-placeholder>
+    </div>
+  </app-panel>
+</div>

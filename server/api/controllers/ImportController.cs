@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -6,26 +7,34 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
+using server.graphql.mutation.modifiers;
 using server.services.csv;
 using server.services.excel_service;
 using server.services.import_service;
+using server.services.import_service.helpers;
 using server.services.import_service.models;
 
 namespace server.controllers
 {
   [Authorize(Roles = "ADMIN")]
-  [Route("api/import")]
-  public class ImportController : Controller
+  [Route("api/import/employees")]
+  public class ImportController : ControllerBase
   {
     private IExcelService _excelService;
     private ICsvService _csvService;
     private IEmployeeImportService _importService;
-    public ImportController(IExcelService excelService, IEmployeeImportService importService, ICsvService csvService)
+    private IEmployeeModifiers _employees;
+    public ImportController(
+      IExcelService excelService,
+      IEmployeeImportService importService,
+      ICsvService csvService,
+      IEmployeeModifiers employees
+    )
     {
       this._excelService = excelService;
       this._csvService = csvService;
       this._importService = importService;
+      this._employees = employees;
     }
 
     /// <summary>Import data from excel file into database. </summary>
@@ -33,13 +42,11 @@ namespace server.controllers
     /// <response code="204">Case 2: Import successful. </response>
     /// <param name="file">Excel file to import data from.</param>
     [HttpPost]
-    public async Task<EmployeeDataToImport> ImportDataFromExcel([FromHeader] IFormFile file)
+    public async Task<ActionResult> ImportDataFromExcel([FromForm] IFormFile file)
     {
       // Read the file to import.
-      if (file == null) { throw new Exception("File was not selected."); }
-     
-      var reader = new BinaryReader(file.OpenReadStream());
-      
+      if (file == null) { throw new Exception("No file was provided."); }
+           
       DataTable dataTable;
       using (var stream = new MemoryStream())
       {
@@ -51,13 +58,22 @@ namespace server.controllers
       // Generate sorted list with the employees
       var employeesToImport = await this._importService.SortEmployeeImportData(dataTable);
 
-      // employeesToImport.EmployeesToAdd = employeesToImport.EmployeesToAdd.Select(e => { e.Rate = 12; return e; }).ToList();
-      // employeesToImport.EmployeesToUpdate = employeesToImport.EmployeesToUpdate.Select(e => { e.Rate = 12; return e; }).ToList();
+      // Update employees
+      if (employeesToImport.EmployeesToUpdate.Any())
+      {
+        await this._employees.UpdateMultipleEmployees(employeesToImport.EmployeesToUpdate.ToModel());
+      }
+
+      // Change employees status
+      if (employeesToImport.EmployeesToUpdateStatus.Any())
+      {
+        await this._employees.UpdateMultipleEmployeesStatus(employeesToImport.EmployeesToUpdateStatus.ToModel());
+      }
 
       // await this._importService.ImportEmployeeData(employeesToImport);
     
       // Return the data
-      return employeesToImport;
+      return Ok(employeesToImport.EmployeesToAdd);
     }
   }
 }

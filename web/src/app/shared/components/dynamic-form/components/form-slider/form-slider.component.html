@@ -1,0 +1,32 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <kendo-numerictextbox
+      [id]="item.field"
+      [appAutoFocus]="!!item.focus"
+      [autoCorrect]="true"
+      [min]="getNumberMinValue(item)"
+      [max]="getNumberMaxValue(item)"
+      [format]="'n0'"
+      [readonly]="item.isReadOnly"
+      [value]="item.value"
+      (valueChange)="writeValue($event)"
+      (keyup.enter)="onEnterKeyPress.emit(item)"
+      class="slider-value"
+    ></kendo-numerictextbox>
+    <div class="flex-row flex slider-wrapper">
+      <kendo-slider
+        [min]="getNumberMinValue(item)"
+        [max]="getNumberMaxValue(item)"
+        [smallStep]="getSliderSmallStep(item)"
+        [showButtons]="false"
+        [readonly]="item.isReadOnly"
+        [value]="item.value"
+        (valueChange)="writeValue($event)"
+        class="flex slider"
+      ></kendo-slider>
+    </div>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

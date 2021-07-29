@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
@@ -48,10 +47,18 @@ namespace server.graphql.extensions
         .Where(k => k != "filter" && k != "restriction" && k != "sort")
         .ToImmutableDictionary(k => k, v => context.ScopedContextData.GetValueOrDefault(v));
 
+      // Get skip argument
+      int? skip = null;
+      if (context.Selection.Field.Arguments.Any(a => a.Name == "skip")) { skip = context.ArgumentValue<int?>("skip"); }
+
+      // Get skip argument
+      int? take = null;
+      if (context.Selection.Field.Arguments.Any(a => a.Name == "take")) { take = context.ArgumentValue<int?>("take"); }
+
       return new KeyInfo
       {
-        Skip = context.Argument<int?>("skip"),
-        Take = context.Argument<int?>("take"),
+        Skip = skip,
+        Take = take,
         Filter = (FilterRoot)filter,
         Sort = (List<Sort>)sort
       };

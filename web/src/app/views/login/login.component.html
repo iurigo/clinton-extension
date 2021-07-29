@@ -1,0 +1,11 @@
+<div class="view-container container">
+  <div class="flex-column form">
+    <app-spinner *ngIf="isBusy"></app-spinner>
+    <img src="/assets/images/logo.png" class="logo"/>
+    <app-dynamic-form #form [items]="formData" (onEnterKeyPress)="onLoginClick()" class="credentials"></app-dynamic-form>
+    <div class="login-actions">
+      <span class="flex"><!-- spring --></span>
+      <button kendoButton (click)="onLoginClick()" [primary]="true" [disabled]="form.form.invalid" class="login-button">Login</button>
+    </div>
+  </div>
+</div>

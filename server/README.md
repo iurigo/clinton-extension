@@ -5,7 +5,7 @@
 ### Create `.env` file, based on an example below.
 ```
 ASPNETCORE_ENVIRONMENT=development
-ASPNETCORE_URLS=http://0.0.0.0:4000
+ASPNETCORE_URLS=http://0.0.0.0:3000
 APP_VERSION=1.0.0
 APP_DB=server=.;database=clinton-extension;uid=<!--db-login-->;pwd=<!--db-password-->
 APP_JWT_KEY=<!--jwt_key-->

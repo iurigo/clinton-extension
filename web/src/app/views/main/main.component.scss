@@ -1,0 +1,20 @@
+.main {
+  border: 1px solid black;
+}
+
+.container {
+  background-color: var(--background-tone2);
+}
+
+.tabs {
+  height: 32px;
+  overflow: hidden;
+  background-color: var(--background-tone3);
+  padding-top: 4px;
+}
+
+.tabstrip-body {
+  background-color: var(--background-tone3);
+  padding: 4px;
+  border: 1px solid var(--background-tone2);
+}

@@ -1,0 +1,52 @@
+.toolbar {
+  height: 38px;
+  background-color: var(--background-tone2);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  margin-right: 2px;
+}
+
+.total {
+  height: 30px;
+  background-color: var(--background-tone1);
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.align-right {
+  display: flex;
+  justify-content: flex-end
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.cell-center {
+  margin: auto;
+  width: 100%;
+}
+
+.icon-remove {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  &:hover {
+    cursor: pointer;
+    color: var(--accent);
+  }
+}
+
+.button {
+  margin-right: 2px;
+}
+
+.content-center {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  width: 100%;
+}

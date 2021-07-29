@@ -1,0 +1,18 @@
+<div [ngSwitch]="item.alignment" class="container">
+  <!-- RIGHT -->
+  <ng-container *ngSwitchCase="align.RIGHT">
+    <hr class="flex line"/>
+    <span *ngIf="item.title" [ngStyle]="item.labelStyle" class="label label-right">{{ item.title }}</span>
+  </ng-container>
+  <!-- CENTER -->
+  <ng-container *ngSwitchCase="align.CENTER">
+    <hr class="flex line"/>
+    <span *ngIf="item.title" [ngStyle]="item.labelStyle" class="label label-center">{{ item.title }}</span>
+    <hr class="flex line"/>
+  </ng-container>
+  <!-- LEFT -->
+  <ng-container *ngSwitchDefault>
+    <span *ngIf="item.title" [ngStyle]="item.labelStyle" class="label label-left">{{ item.title }}</span>
+    <hr class="flex line"/>
+  </ng-container>
+</div>

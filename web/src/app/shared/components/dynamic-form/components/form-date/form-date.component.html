@@ -1,0 +1,16 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <kendo-datepicker
+      [id]="item.field"
+      [appAutoFocus]="!!item.focus"
+      [format]="item.format || 'MM/dd/yyyy'"
+      [readonly]="item.isReadOnly"
+      [value]="item.value"
+      (valueChange)="writeValue($event)"
+      class="flex"
+    ></kendo-datepicker>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

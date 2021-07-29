@@ -1,0 +1,22 @@
+.container {
+  height: 42px;
+  padding: 4px;
+  background-image: var(--gradient-tone3);
+  border-bottom: 1px solid var(--border-dark);
+}
+
+.title {
+  font-size: 20px;
+  color: var(--text-light);
+  padding-left: 4px;
+}
+
+.name {
+  color: var(--text-light);
+  margin-right: 6px;
+}
+
+.btn {
+  box-shadow: var(--shadow-bottom);
+}
+

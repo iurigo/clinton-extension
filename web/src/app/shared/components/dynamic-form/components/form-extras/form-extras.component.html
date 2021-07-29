@@ -1,0 +1,46 @@
+<div [ngStyle]="{ width: containerWidth }" class="flex-row container">
+  <!-- Left label -->
+  <label *ngIf="showLeftLabel" [for]="item.extras.field" class="k-checkbox-label left-label">{{ item.title }}</label>
+  <!-- Control -->
+  <ng-container [ngSwitch]="item.extras.type">
+    <!-- BOOLEAN -->
+    <input
+      *ngSwitchCase="itemType.BOOLEAN"
+      type="checkbox"
+      [id]="item.extras.field"
+      [ngClass]="{ 'control': showRightLabel }"
+      [disabled]="item.extras.isReadOnly"
+      [ngModel]="item.extras.value"
+      (ngModelChange)="onValueChange(item, $event)"
+      class="k-checkbox"
+    />
+    <!-- SWITCH -->
+    <kendo-switch
+      *ngSwitchCase="itemType.SWITCH"
+      [onLabel]="item.extras.trueLabel"
+      [offLabel]="item.extras.falseLabel"
+      [readonly]="item.extras.isReadOnly"
+      [ngModel]="item.extras.value"
+      (ngModelChange)="onValueChange(item, $event)"
+      class="control"
+    ></kendo-switch>
+    <!-- DROPDOWN -->
+    <kendo-dropdownlist
+      *ngSwitchCase="itemType.DROPDOWN"
+      [data]="item.extras.options"
+      [valueField]="'id'"
+      [textField]="'value'"
+      [readonly]="item.extras.isReadOnly"
+      [valuePrimitive]="true"
+      [value]="item.extras.value"
+      [kendoDropDownFilter]="{caseSensitive: false, operator: 'contains'}"
+      (valueChange)="onValueChange(item, $event)"
+      class="form-item"
+      >
+    </kendo-dropdownlist>
+    <!-- [ UNKNOWN ] -->
+    <div *ngSwitchDefault>Unknown Type: {{ item.type }}</div>
+  </ng-container>
+  <!-- Right label -->
+  <label *ngIf="showRightLabel" [for]="item.extras.field" class="k-checkbox-label right-label">{{ item.extras.title }}</label>
+</div>

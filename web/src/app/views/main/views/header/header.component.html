@@ -1,0 +1,7 @@
+<div class="flex-row container flex-center">
+  <div class="title disable-select">Clinton Employees</div>
+  <div class="flex"></div>
+  <span class="name disable-select">{{ fullName }}</span>
+  <button kendoButton (click)="onClickLogout()" class="btn">Log Out</button>
+</div>
+<app-spinner *ngIf="isLoading"></app-spinner>

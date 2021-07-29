@@ -1,0 +1,19 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <kendo-maskedtextbox
+      [id]="item.field"
+      [appAutoFocus]="!!item.focus"
+      [mask]="item.mask"
+      [readonly]="item.isReadOnly"
+      [includeLiterals]="true"
+      [disabled]="item.disabled"
+      [value]="item.value"
+      (valueChange)="writeValue($event)"
+      (keyup.enter)="onEnterKeyPress.emit(item)"
+      class="flex"
+    ></kendo-maskedtextbox>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

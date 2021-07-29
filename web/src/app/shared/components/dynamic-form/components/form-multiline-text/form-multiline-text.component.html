@@ -1,0 +1,17 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <textarea
+      [id]="item.field"
+      [appAutoFocus]="!!item.focus"
+      [disabled]="item.isReadOnly"
+      [ngModel]="item.value"
+      [attr.rows]="item.rows || 5"
+      (ngModelChange)="writeValue($event)"
+      class="k-textbox flex textarea"
+    >
+    </textarea>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

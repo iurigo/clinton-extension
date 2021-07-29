@@ -1,0 +1,82 @@
+<div class="view-container flex-column">
+
+  <!-- Loading Indicator -->
+  <app-spinner *ngIf="isLoading" [message]="loadingMessage"></app-spinner>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <button kendoButton [primary]="true" class="button" (click)="onSubmitNewEmployees()">Submit</button>
+    <button *ngIf="selectedEmployeeIds.length > 0" appPanelTitle kendoButton [primary]="true" (click)="onUpdateMultiple()">
+      <span class="flex-row button">
+        <span class="k-icon k-i-edit" style="margin-right: 4px;"></span>
+         Update Multiple
+      </span>
+    </button>
+  </div>
+
+  <div class="view-wrapper flex">
+    <kendo-grid class="view-container" 
+      [data]="newEmployeesData "
+      [selectable]="{ mode: 'multiple' }"
+      [kendoGridSelectBy]="'employeeId'"
+      [selectedKeys]="selectedEmployeeIds">
+      <kendo-grid-checkbox-column [showSelectAll]="true" [reorderable]="false" [resizable]="false" [columnMenu]="false" [width]="'44px'">
+      </kendo-grid-checkbox-column>
+      <!-- Employee Id -->
+      <kendo-grid-column title="Employee Id">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.employeeId }}
+        </ng-template>
+      </kendo-grid-column>
+      <!-- First Name -->
+      <kendo-grid-column title="First Name">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.firstName }}
+        </ng-template>
+      </kendo-grid-column>
+      <!-- Last Name -->
+      <kendo-grid-column title="Last Name">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.lastName }}
+        </ng-template>
+      </kendo-grid-column>
+      <!-- Discipline -->
+      <kendo-grid-column title="Discipline">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ getDisciplineName(dataItem.discipline) }}
+        </ng-template>
+      </kendo-grid-column>
+      <!-- Rate -->
+      <kendo-grid-column title="Rate">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          {{ dataItem.rate }}
+        </ng-template>
+      </kendo-grid-column>
+      <!-- Is Active -->
+      <kendo-grid-column title="Active">
+        <ng-template kendoGridCellTemplate let-dataItem>
+          <div class="content-center">
+            <span *ngIf="dataItem.isActive" class="k-icon k-i-check"></span>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+      <!-- Actions -->
+      <kendo-grid-column *ngIf="newEmployeeActions.length > 0" [resizable]="false" [reorderable]="false"
+        [columnMenu]="false" [width]="'60px'">
+        <ng-template kendoGridCellTemplate let-employee="dataItem">
+          <div class="content-center">
+            <app-menu-button [actions]="newEmployeeActions" (onAction)="onEmployeeAction($event, employee)">
+            </app-menu-button>
+          </div>
+        </ng-template>
+      </kendo-grid-column>
+
+    </kendo-grid>
+  </div>
+
+  <!-- Total -->
+  <div class="total">
+    Total number of new employees: {{ totalNumberOfAssets }}
+  </div>
+
+</div>

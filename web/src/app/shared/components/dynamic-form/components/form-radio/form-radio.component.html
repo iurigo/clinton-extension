@@ -1,0 +1,23 @@
+<div [ngClass]="{ 'hidden': item.isHidden }" class="flex-column">
+  <app-form-label *ngIf="item.title != null" [item]="item"></app-form-label>
+  <div class="flex-row">
+    <div class="flex form">
+      <div *ngFor="let itemOption of item.options" class="flex-row radio">
+        <input
+          type="radio"
+          kendoRadioButton
+          [id]="getRadioOptionId(itemOption)"
+          [name]="item.field"
+          [disabled]="item.isReadOnly"
+          [value]="itemOption.id"
+          [ngModel]="item.value"
+          (ngModelChange)="writeValue(itemOption.id)"
+          class="radio-input"
+        />
+        <label [for]="getRadioOptionId(itemOption)">{{ itemOption.value }}</label>
+      </div>
+    </div>
+    <app-form-extras *ngIf="!!item.extras" [item]="item" (onExtras)="onExtras.emit($event)"></app-form-extras>
+    <app-form-actions *ngIf="!!item.actions" [item]="item" (onAction)="onAction.emit($event)" class="flex-row"></app-form-actions>
+  </div>
+</div>

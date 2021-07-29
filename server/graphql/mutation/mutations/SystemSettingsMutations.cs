@@ -14,14 +14,14 @@ namespace server.graphql.mutation.mutations
         .Argument("value", a => a.Type<StringType>().Description("The settings value."))
         .Type<NonNullType<BooleanType>>()
         .Authorize(new[] { UserRole.ADMIN.ToString() })
-        .Resolver(ctx => ctx.Service<ISystemSettingsModifiers>().SetSystemSettings(ctx.Argument<string>("key"), ctx.Argument<string>("value")));
+        .Resolve(ctx => ctx.Service<ISystemSettingsModifiers>().SetSystemSettings(ctx.ArgumentValue<string>("key"), ctx.ArgumentValue<string>("value")));
 
       descriptor.Field("systemSettingsClear")
         .Description("Clear system settings.")
         .Argument("key", a => a.Type<NonNullType<StringType>>().Description("The settings key."))
         .Type<NonNullType<BooleanType>>()
         .Authorize(new[] { UserRole.ADMIN.ToString() })
-        .Resolver(ctx => ctx.Service<ISystemSettingsModifiers>().ClearSystemSettings(ctx.Argument<string>("key")));
+        .Resolve(ctx => ctx.Service<ISystemSettingsModifiers>().ClearSystemSettings(ctx.ArgumentValue<string>("key")));
     }
 
   }

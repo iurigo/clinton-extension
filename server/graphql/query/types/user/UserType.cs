@@ -1,11 +1,9 @@
 using System.Threading;
-using HotChocolate.Resolvers;
 using HotChocolate.Types;
 using server.database.models;
 using server.graphql.extensions;
 using server.graphql.models;
 using server.graphql.query.resolvers;
-using server.graphql.types;
 
 namespace server.graphql.query.types.user
 {
@@ -45,10 +43,11 @@ namespace server.graphql.query.types.user
       descriptor.Field("systemLogs")
         .Description("The list of actions made by user")
         .Type<NonNullType<ListType<NonNullType<SystemLogType>>>>()
-        .Resolver(ctx =>
+        .Resolve(ctx =>
         {
-          return ctx.GroupDataLoader<Key, SystemLog>(nameof(ISystemLogResolvers.GetSystemLogByUserId),
-            keys => ctx.Service<ISystemLogResolvers>().GetSystemLogByUserId(keys)
+          return ctx.GroupDataLoader<Key, SystemLog>(
+            (keys, _) => ctx.Service<ISystemLogResolvers>().GetSystemLogByUserId(keys),
+            nameof(ISystemLogResolvers.GetSystemLogByUserId)
           ).LoadAsync(ctx.GetKey(ctx.Parent<User>().Id), CancellationToken.None);
         });
 

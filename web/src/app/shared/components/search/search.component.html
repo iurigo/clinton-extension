@@ -1,0 +1,9 @@
+<div class="k-textbox flex container">
+  <input 
+    [(ngModel)]="search"
+    (keyup.enter)="onSearch.emit(search)" 
+    [attr.placeholder]="placeholder" 
+    class="k-input flex search" />
+  <span (click)="onSearch.emit(search)" class="k-icon k-i-search icon search-icon"></span>
+  <span (click)="search = ''; onSearch.emit(search);" class="k-icon k-i-x icon clear-icon"></span>
+</div>

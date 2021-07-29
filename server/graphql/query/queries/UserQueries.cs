@@ -16,18 +16,19 @@ namespace server.graphql.query.queries
         .Description("The list of users.")
         .Type<ListType<UserType>>()
         .Authorize()
-        .Resolver(ctx => ctx.Service<IUserResolvers>().GetUsers(ctx.GetKeyInfo()));
+        .Resolve(ctx => ctx.Service<IUserResolvers>().GetUsers(ctx.GetKeyInfo()));
 
       descriptor.Field("user")
         .Description("Get the user by id.")
         .Argument("id", a => a.Type<NonNullType<IntType>>().Description("The unique identifier."))
         .Type<UserType>()
         .Authorize()
-        .Resolver(ctx =>
+        .Resolve(ctx =>
         {
-          return ctx.BatchDataLoader<int, User>(nameof(IUserResolvers.GetUserById),
-            keys => ctx.Service<IUserResolvers>().GetUserById(keys))
-            .LoadAsync(ctx.Argument<int>("id"), CancellationToken.None);
+          return ctx.BatchDataLoader<int, User>(
+            (keys, _) => ctx.Service<IUserResolvers>().GetUserById(keys),
+            nameof(IUserResolvers.GetUserById)
+          ).LoadAsync(ctx.ArgumentValue<int>("id"), CancellationToken.None);
         });
     }
 

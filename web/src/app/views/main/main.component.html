@@ -1,0 +1,14 @@
+<div class="view-container flex-column container">
+  <app-header></app-header>
+  <kendo-tabstrip [animate]="false" (tabSelect)="onTabSelect($event)" class="tabs">
+    <kendo-tabstrip-tab *ngFor="let tab of tabs" [title]="tab.title" [selected]="isSelected(tab.url)"></kendo-tabstrip-tab>
+  </kendo-tabstrip>
+  <div class="flex flex-column tabstrip-body">
+    <div class="view-wrapper flex">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+<div kendoDialogContainer></div>
+<div kendoWindowContainer></div>

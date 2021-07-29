@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="body" [ngClass]="getMessageClass()">
+    {{ message }}
+  </div>
+  <div class="buttons k-dialog-buttongroup k-dialog-button-layout-stretched">
+    <button kendoButton [primary]="true" (click)="onActionClick(true)" class="primary-action-button">{{ yesActionName }}</button>
+    <button kendoButton (click)="onActionClick(false)" class="no-action-button">{{ NoActionName }}</button>
+    <button *ngIf="CancelActionName != null" kendoButton (click)="onActionClick(null)" class="no-action-button">{{ CancelActionName }}</button>
+  </div>
+</div>

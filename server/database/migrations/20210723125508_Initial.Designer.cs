@@ -10,7 +10,7 @@ using server.database.contexts;
 namespace server.database.migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210715151240_Initial")]
+    [Migration("20210723125508_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -44,6 +44,9 @@ namespace server.database.migrations
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -110,7 +113,7 @@ namespace server.database.migrations
                         new
                         {
                             Id = 1L,
-                            Date = new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)),
+                            Date = new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)),
                             Source = "system",
                             Type = 0
                         });
@@ -193,13 +196,13 @@ namespace server.database.migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)),
+                            CreatedAt = new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)),
                             FullName = "Administrator",
-                            PasswordHash = "$2a$11$Y2w46s/n.gv80rbudiU3zOhHQaz.iZphi1XQplEVo1vyS4py/9di6",
-                            PasswordSalt = "$2a$11$Y2w46s/n.gv80rbudiU3zO",
+                            PasswordHash = "$2a$11$6BEaJsYKeaUr0e8Cpuk9F.lVqu.ux1ZiQCcvjq6iTWY0tQxkxreb.",
+                            PasswordSalt = "$2a$11$6BEaJsYKeaUr0e8Cpuk9F.",
                             Role = 1,
                             Status = 1,
-                            UpdatedAt = new DateTimeOffset(new DateTime(2021, 7, 15, 11, 12, 38, 885, DateTimeKind.Unspecified).AddTicks(3326), new TimeSpan(0, -4, 0, 0, 0)),
+                            UpdatedAt = new DateTimeOffset(new DateTime(2021, 7, 23, 8, 55, 7, 503, DateTimeKind.Unspecified).AddTicks(5429), new TimeSpan(0, -4, 0, 0, 0)),
                             Username = "admin"
                         });
                 });

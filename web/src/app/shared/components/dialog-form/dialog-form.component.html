@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="body">
+    <app-dynamic-form
+      [items]="items"
+      (onValueChange)="onValueChange.emit($event)"
+      (onAction)="onAction.emit($event)"
+    ></app-dynamic-form>
+  </div>
+  <div class="buttons k-dialog-buttongroup k-dialog-button-layout-stretched">
+    <button kendoButton [primary]="true" [disabled]="isDisabled()" (click)="onOkClick()" class="primary-action-button">{{ options.actionName }}</button>
+    <button kendoButton (click)="onCancelClick()" class="cancel-action-button">{{ options.cancelName }}</button>
+  </div>
+</div>

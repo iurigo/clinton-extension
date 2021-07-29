@@ -1,0 +1,38 @@
+.container {
+  height: 142px;
+  min-height: 100px;
+  background-color: var(--background-tone2);
+}
+
+.header {
+  height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--background-tone1);
+  color: var(--text-light);
+  font-size: 20px;
+  padding: 0px 6px 0px 12px;
+}
+
+.wrapper {
+  background-color: var(--form-bg);
+  margin: 10px;
+  padding: 10px;
+  width: 290px;
+  border-radius: 3px;
+}
+
+.main-action-btn {
+  width: 100px;
+}
+
+.dialog-actions {
+  max-width: calc(90vh - 30px);
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.small-btn {
+  height: 30px;
+  width: 30px;
+}

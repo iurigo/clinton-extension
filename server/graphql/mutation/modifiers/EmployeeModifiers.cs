@@ -15,10 +15,11 @@ namespace server.graphql.mutation.modifiers
 {
   public interface IEmployeeModifiers
   {
-    Task<Employee> CreateEmployee(EmployeeInput input);
-    Task<List<Employee>> CreateMultipleEmployees(List<EmployeeInput> input);
+    Task<bool> CreateEmployee(EmployeeInput input);
+    Task<bool> CreateMultipleEmployees(List<EmployeeInput> input);
     Task<bool> UpdateEmployee(EmployeeInput input);
     Task<bool> UpdateMultipleEmployees(List<EmployeeInput> input);
+    Task<bool> UpdateMultipleEmployeesStatus(List<EmployeeInput> input);
     Task<bool> DeleteEmployee(int id);
     Task<bool> DeleteMultipleEmployees(List<int> ids);
   }
@@ -42,7 +43,7 @@ namespace server.graphql.mutation.modifiers
     /// <summary>
     /// Creates a new employee
     /// </summary>
-    public async Task<Employee> CreateEmployee(EmployeeInput input)
+    public async Task<bool> CreateEmployee(EmployeeInput input)
     {
       using (var transaction = this._db.Database.BeginTransaction())
       {
@@ -67,6 +68,7 @@ namespace server.graphql.mutation.modifiers
             LastName = input.LastName,
             Discipline = input.Discipline,
             Rate = input.Rate,
+            IsActive = input.IsActive,
             CreatedAt = now,
             UpdatedAt = now
           };
@@ -85,7 +87,8 @@ namespace server.graphql.mutation.modifiers
               firstName = input.FirstName,
               lastName = input.LastName,
               discipline = input.Discipline,
-              rate = input.Rate
+              rate = input.Rate,
+              isActive = input.IsActive
             },
             date: now
           );
@@ -97,7 +100,7 @@ namespace server.graphql.mutation.modifiers
           transaction.Commit();
 
           // Return new employee
-          return employee;
+          return true;
         }
         catch
         {
@@ -111,7 +114,7 @@ namespace server.graphql.mutation.modifiers
     /// <summary>
     /// Creates a new employee
     /// </summary>
-    public async Task<List<Employee>> CreateMultipleEmployees(List<EmployeeInput> input)
+    public async Task<bool> CreateMultipleEmployees(List<EmployeeInput> input)
     {
       using (var transaction = this._db.Database.BeginTransaction())
       {
@@ -128,6 +131,7 @@ namespace server.graphql.mutation.modifiers
             LastName = i.LastName,
             Discipline = i.Discipline,
             Rate = i.Rate,
+            IsActive = i.IsActive,
             CreatedAt = now,
             UpdatedAt = now
           }).ToList();
@@ -148,7 +152,8 @@ namespace server.graphql.mutation.modifiers
                   firstName = employee.FirstName,
                   lastName = employee.LastName,
                   discipline = employee.Discipline,
-                  rate = employee.Rate
+                  rate = employee.Rate,
+                  isActive = employee.IsActive
                 },
                 date: now
               );
@@ -162,7 +167,7 @@ namespace server.graphql.mutation.modifiers
           transaction.Commit();
 
           // Return new employee
-          return newEmployees;
+          return true;
         }
         catch
         {
@@ -182,7 +187,7 @@ namespace server.graphql.mutation.modifiers
       var now = DateTimeOffset.Now;
 
       // Get an existing employee
-      var existingEmployee = await this._db.Employees.FirstOrDefaultAsync(i => i.EmployeeId == input.EmployeeId);
+      var existingEmployee = await this._db.Employees.FirstOrDefaultAsync(i => i.Id == input.Id);
       if (existingEmployee == null) { throw new QueryException("The employee was not found."); }
 
       // Compare existing model with the new one
@@ -192,7 +197,8 @@ namespace server.graphql.mutation.modifiers
         nameof(Employee.FirstName),
         nameof(Employee.LastName),
         nameof(Employee.Discipline),
-        nameof(Employee.Rate)
+        nameof(Employee.Rate),
+        nameof(Employee.IsActive)
       });
 
       // Write to employee log and save changes if there are any changes
@@ -204,6 +210,7 @@ namespace server.graphql.mutation.modifiers
         existingEmployee.LastName = input.LastName;
         existingEmployee.Discipline = input.Discipline;
         existingEmployee.Rate = input.Rate;
+        existingEmployee.IsActive = input.IsActive;
         existingEmployee.UpdatedAt = now;
 
         // Write the log
@@ -238,7 +245,7 @@ namespace server.graphql.mutation.modifiers
       foreach (var employee in input)
       {
         // Get an existing employee
-        var existingEmployee = await this._db.Employees.FirstOrDefaultAsync(i => i.EmployeeId == employee.EmployeeId);
+        var existingEmployee = await this._db.Employees.FirstOrDefaultAsync(i => i.Id == employee.Id);
         if (existingEmployee == null) { throw new QueryException("The employee was not found."); }
 
         // Compare existing model with the new one
@@ -248,7 +255,8 @@ namespace server.graphql.mutation.modifiers
           nameof(Employee.FirstName),
           nameof(Employee.LastName),
           nameof(Employee.Discipline),
-          nameof(Employee.Rate)
+          nameof(Employee.Rate),
+          nameof(Employee.IsActive)
         });
 
         // Write to employee log and save changes if there are any changes
@@ -260,6 +268,7 @@ namespace server.graphql.mutation.modifiers
           existingEmployee.LastName = employee.LastName;
           existingEmployee.Discipline = employee.Discipline;
           existingEmployee.Rate = employee.Rate;
+          existingEmployee.IsActive = employee.IsActive;
           existingEmployee.UpdatedAt = now;
 
           // Update existing employee
@@ -276,12 +285,50 @@ namespace server.graphql.mutation.modifiers
             },
             date: now
           );
-
         }
-
-        // Save all changes
-        await this._db.SaveChangesAsync();
       }
+
+      // Save all changes
+      await this._db.SaveChangesAsync();
+
+      // Return success
+      return true;
+    }
+    /// <summary>
+    /// Updates status of the existing employees
+    /// </summary>
+    public async Task<bool> UpdateMultipleEmployeesStatus(List<EmployeeInput> input)
+    {
+      // Get the current date
+      var now = DateTimeOffset.Now;
+
+      foreach (var employee in input)
+      {
+        // Get an existing employee
+        var existingEmployee = await this._db.Employees.FirstOrDefaultAsync(i => i.Id == employee.Id);
+        if (existingEmployee == null) { throw new QueryException($"The employee with \"EmployeeId\": {employee.EmployeeId} was not found."); }
+
+        // Set property values
+        existingEmployee.IsActive = employee.IsActive;
+        existingEmployee.UpdatedAt = now;
+
+        // Update existing employee
+        this._db.Update(existingEmployee);
+
+        // Write the log
+        this._logs.Write(
+          source: EventSource.EMPLOYEE,
+          type: EventType.UPDATE,
+          details: new
+          {
+            id = existingEmployee.Id,
+            isActive = existingEmployee.IsActive
+          },
+          date: now
+        );
+      }
+      // Save all changes
+      await this._db.SaveChangesAsync();
 
       // Return success
       return true;

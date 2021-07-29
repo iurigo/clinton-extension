@@ -1,0 +1,170 @@
+<div [formGroup]="form" [ngStyle]="style" class="container">
+  <ng-container *ngFor="let item of items">
+    <ng-container [ngSwitch]="item.type">
+      <!-- SEPARATOR -->
+      <app-form-separator
+        *ngSwitchCase="itemType.SEPARATOR"
+        [item]="item"
+        [ngStyle]="item.style"
+        [labelStyle]="item.labelStyle"
+        class="form-item"
+      ></app-form-separator>
+      <!-- TEXT -->
+      <app-form-text
+        *ngSwitchCase="itemType.TEXT"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onEnterKeyPress)="onEnterKeyPress.emit(item)"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-text>
+      <!-- MULTILINE_TEXT -->
+      <app-form-multiline-text
+        *ngSwitchCase="itemType.MULTILINE_TEXT"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-multiline-text>
+      <!-- PASSWORD -->
+      <app-form-password
+        *ngSwitchCase="itemType.PASSWORD"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onEnterKeyPress)="onEnterKeyPress.emit(item)"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-password>
+      <!-- URL -->
+      <app-form-url
+        *ngSwitchCase="itemType.URL"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onEnterKeyPress)="onEnterKeyPress.emit(item)"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-url>
+      <!-- EDITOR -->
+      <app-form-editor
+        *ngSwitchCase="itemType.EDITOR"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-editor>
+      <!-- NUMBER -->
+      <app-form-number
+        *ngSwitchCase="itemType.NUMBER"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onEnterKeyPress)="onEnterKeyPress.emit(item)"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-number>
+      <!-- SLIDER -->
+      <app-form-slider
+        *ngSwitchCase="itemType.SLIDER"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onEnterKeyPress)="onEnterKeyPress.emit(item)"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-slider>
+      <!-- DATE -->
+      <app-form-date
+        *ngSwitchCase="itemType.DATE"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-date>
+      <!-- TIME -->
+      <app-form-time
+        *ngSwitchCase="itemType.TIME"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-time>
+      <!-- BOOLEAN -->
+      <app-form-boolean
+        *ngSwitchCase="itemType.BOOLEAN"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-boolean>
+      <!-- DROPDOWN -->
+      <app-form-drop-down
+        *ngSwitchCase="itemType.DROPDOWN"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-drop-down>
+      <!-- MULTISELECT -->
+      <app-form-multi-select
+        *ngSwitchCase="itemType.MULTISELECT"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-multi-select>
+      <!-- RADIO -->
+      <app-form-radio
+        *ngSwitchCase="itemType.RADIO"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-radio>
+      <!-- FILE -->
+      <app-form-file
+        *ngSwitchCase="itemType.FILE"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        class="form-item"
+      ></app-form-file>
+      <!-- COLOR -->
+      <app-form-color
+        *ngSwitchCase="itemType.COLOR"
+        [formControl]="form.controls[item.field]"
+        [item]="item"
+        [ngStyle]="item.style"
+        (onAction)="onAction.emit($event)"
+        (onExtras)="onExtras.emit($event)"
+        class="form-item"
+      ></app-form-color>
+      <!-- [ UNKNOWN ] -->
+      <div *ngSwitchDefault>Unknown Type: {{ item.type }}</div>
+    </ng-container>
+  </ng-container>
+</div>

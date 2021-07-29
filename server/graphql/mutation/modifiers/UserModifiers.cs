@@ -14,7 +14,7 @@ namespace server.graphql.mutation.modifiers
 {
   public interface IUserModifiers
   {
-    Task<User> CreateUser(UserCreateInput input);
+    Task<bool> CreateUser(UserCreateInput input);
     Task<bool> UpdateUser(UserUpdateInput input);
     Task<bool> DeleteUser(int id);
     Task<bool> SetPassword(int id, string password);
@@ -37,7 +37,7 @@ namespace server.graphql.mutation.modifiers
     /// <summary>
     /// Creates a new user
     /// </summary>
-    public async Task<User> CreateUser(UserCreateInput input)
+    public async Task<bool> CreateUser(UserCreateInput input)
     {
       using (var transaction = this._db.Database.BeginTransaction())
       {
@@ -95,7 +95,7 @@ namespace server.graphql.mutation.modifiers
           transaction.Commit();
 
           // Return new user
-          return user;
+          return true;
         }
         catch
         {

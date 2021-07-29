@@ -1,0 +1,68 @@
+$border-radius: 2px;
+$primary: #3e80ed;
+$secondary: #f6f6f6;
+$info: #3e80ed;
+$success: #5ec232;
+$warning: #fdce3e;
+$error: #d51923;
+$body-text: #424242;
+$body-bg: #ffffff;
+$headings-text: #272727;
+$subtle-text: #666666;
+$disabled-text: #8f8f8f;
+$component-text: #424242;
+$component-bg: #ffffff;
+$base-text: #424242;
+$base-bg: #fafafa;
+$form-bg: #f9f9f9;
+$selected-text: #ffffff;
+$hovered-text: #424242;
+$hovered-bg: #ececec;
+$selected-text: #ffffff;
+$selected-bg: #3e80ed;
+$text-light: #030303;
+$button-text: #424242;
+$button-bg: #f5f5f5;
+$link-text: #3e80ed;
+$link-hover-text: #5c94f1;
+
+$background-tone1: #dadde1;
+$background-tone2: #cccfd6;
+$background-tone3: #94ace6;
+$background-tone4: #2F3951;
+
+$border-light: 1px solid #0b77be62;
+$border-dark: 1px solid #0421642d;
+
+$shadow-bottom: 0px 1px 1px 0px #0000003d;
+
+:root {
+  --background-tone1: #{$background-tone1};
+  --background-tone2: #{$background-tone2};
+  --background-tone3: #{$background-tone3};
+  --background-tone4: #{$background-tone4};
+
+  --border-light: #{$border-light};
+  --border-dark: #{$border-dark};
+
+  --form-bg: #{$form-bg};
+
+  --text-light: #{$text-light};
+
+  --selected-text: #{$selected-text};
+
+  --shadow-bottom: #{$shadow-bottom};
+}
+
+$base-theme: Default;
+$skin-name: default-light;
+$swatch-name: Default;
+
+$series-a: #ff6358;
+$series-b: #ffd246;
+$series-c: #78d237;
+$series-d: #28b4c8;
+$series-e: #2d73f5;
+$series-f: #aa46be;
+
+@import "~@progress/kendo-theme-default/dist/all.scss";

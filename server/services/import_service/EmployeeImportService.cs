@@ -41,7 +41,7 @@ namespace server.services.import_service
       var employeeDataToImport = new EmployeeDataToImport
       {
         EmployeesToAdd = new List<EmployeeImport>(),
-        EmployeesToRemove = new List<EmployeeImport>(),
+        EmployeesToUpdateStatus = new List<EmployeeImport>(),
         EmployeesToUpdate = new List<EmployeeImport>()
       };
 
@@ -53,12 +53,12 @@ namespace server.services.import_service
 
       var importEmployeeIds = importEmployees.Select(e => e.EmployeeId).ToList();
 
-      // Check removed employees
+      // Check removed employees and change "IsActive" status
       var removed = oldEmployeeIds.Except(importEmployeeIds).ToList();
       if (removed.Any())
       {
         var employeesToRemove = allEmployees.Where(e => removed.Contains(e.EmployeeId)).ToList();
-        employeeDataToImport.EmployeesToRemove.AddRange(employeesToRemove.ToModel());
+        employeeDataToImport.EmployeesToUpdateStatus.AddRange(employeesToRemove.ToModel().SetStatus(false));
       }
 
       // Check added employees
@@ -66,7 +66,7 @@ namespace server.services.import_service
       if (added.Any())
       {
         var employeesToAdd = importEmployees.Where(e => added.Contains(e.EmployeeId)).ToList();
-        employeeDataToImport.EmployeesToAdd.AddRange(employeesToAdd);
+        employeeDataToImport.EmployeesToAdd.AddRange(employeesToAdd.SetStatus(true));
       }
       
       // Check updated employees
@@ -75,6 +75,10 @@ namespace server.services.import_service
       {
         if (allEmployees.Any(e => e.EmployeeId == employee.EmployeeId && (e.FirstName != employee.FirstName || e.LastName != employee.LastName || e.Discipline != employee.Discipline)))
         {
+          var existingEmployee = allEmployees.FirstOrDefault(e => e.EmployeeId == employee.EmployeeId);
+          employee.Id = existingEmployee.Id;
+          employee.IsActive = existingEmployee.IsActive;
+          employee.Rate = existingEmployee.Rate;
           updated.Add(employee);
         }
       }
@@ -90,8 +94,8 @@ namespace server.services.import_service
     /// </summary>
     public async Task<bool> ImportEmployeeData(EmployeeDataToImport input)
     {
-      // Remove employees
-      await this._eployees.DeleteMultipleEmployees(input.EmployeesToRemove.Select(e => e.Id.Value).ToList());
+      // Update removed employees "IsActive" status
+      await this._eployees.UpdateMultipleEmployeesStatus(input.EmployeesToUpdateStatus.ToModel());
 
       // Update employees
       await this._eployees.UpdateMultipleEmployees(input.EmployeesToUpdate.ToModel());
